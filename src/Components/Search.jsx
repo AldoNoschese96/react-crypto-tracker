@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const Search = ({ onChange, value }) => {
   return (
@@ -9,7 +9,7 @@ const Search = ({ onChange, value }) => {
       name="search"
       value={value}
       className="py-2 px-2 border-2 rounded-md outline-none focus:outline-none text-sm w-full"
-      placeholder="Search by cryptoname es: Bitcoin"
+      placeholder="Search by name es: Bitcoin"
     />
   );
 };

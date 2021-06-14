@@ -11,6 +11,9 @@ import { getAllCrypto } from "./api/requests";
 import moment from "moment";
 import Pagination from "./Components/Pagination";
 
+//Icons
+import { RefreshIcon } from "@heroicons/react/solid";
+
 function App() {
   const [cryptoList, setCryptoList] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -20,16 +23,8 @@ function App() {
 
   useEffect(() => {
     getCrypoListHandler();
-    // startIntervalHandler();
     setLastDateUpdated(moment().format("LTS"));
   }, []);
-
-  const startIntervalHandler = () => {
-    setInterval(() => {
-      getCrypoListHandler();
-      setLastDateUpdated(moment().format("LTS"));
-    }, 60000);
-  };
 
   const getCrypoListHandler = async () => {
     //TODO : Loader
@@ -37,6 +32,7 @@ function App() {
       const data = await getAllCrypto();
       setCryptoList(data);
       setMaxPage(Math.ceil(data.length / 20));
+      setLastDateUpdated(moment().format("LTS"));
     } catch (error) {
       console.error(error);
     }
@@ -71,7 +67,13 @@ function App() {
               value={search}
             />
           </div>
-          <span className="text-gray-500">{`Last Update ${lastDateUpdated}`}</span>
+          <div className="flex items-center">
+            <span className="text-gray-500">{`Last Update ${lastDateUpdated}`}</span>
+            <RefreshIcon
+              className="h-5 w-5 ml-3 text-gray-700 cursor-pointer"
+              onClick={getCrypoListHandler}
+            />
+          </div>
         </div>
         <div className="mx-auto min-w-full">
           <Table
